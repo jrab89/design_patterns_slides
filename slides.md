@@ -368,7 +368,7 @@ class Report
   end
 
   def generate
-    generator.generate
+    generator.generate(title, items)
   end
 end
 ```
