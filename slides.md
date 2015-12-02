@@ -7,11 +7,9 @@ class: middle
 
 ---
 
-Its not hard to write software where the requirements never change
+# Let's make some reports!
 
----
-
-However, if you make something people like they always want more!
+![Office Space](http://i.giphy.com/lSVL6vdhdZVPW.gif)
 
 ---
 
