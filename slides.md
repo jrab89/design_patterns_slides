@@ -109,7 +109,7 @@ lines = []
 
 case format
 when :plain_text
-  lines << "#{title}"
+  lines << title
   lines << "=" * title.length
 when :html
   lines << "<html>"
@@ -204,7 +204,7 @@ class Report
     lines << generate_body
     lines << generate_body_end
     lines << generate_end
-    lines.flatten
+    lines.flatten.compact
   end
 
   def generate_body
@@ -277,6 +277,23 @@ end
 
 ```ruby
 class PlainTextReport < Report
+  def generate_start
+  end
+  def generate_head
+    [
+      title,
+      "=" * title.length
+    ]
+  end
+  def generate_body_start
+  end
+  def generate_item(item)
+    "- #{item}"
+  end
+  def generate_body_end
+  end
+  def generate_end
+  end
 end
 ```
 
@@ -288,7 +305,13 @@ stuff_to_buy = ["Hot Pockets", "Frozen Pizza", "Pop Tarts"]
 html_report = HTMLReport.new("Shopping List", stuff_to_buy)
 puts(html_report.generate)
 
-plan_text_report = PlainTextReport.new("Shopping List", stuff_to_buy)
+plain_text_report = PlainTextReport.new("Shopping List", stuff_to_buy)
 puts(plain_text_report.generate)
 ```
+
+---
+
+# Different formats are different subclasses
+
+![Template Method Pattern](https://upload.wikimedia.org/wikipedia/commons/b/b5/Template_Method_design_pattern.png)
 
