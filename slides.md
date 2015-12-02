@@ -311,11 +311,32 @@ puts(plain_text_report.generate)
 
 ---
 
-## Different formats become different subclasses, the general flow stays in the base class
+### Different formats become different subclasses, the general flow stays in the base class
 
-![Template Method Pattern](https://upload.wikimedia.org/wikipedia/commons/b/b5/Template_Method_design_pattern.png)
+```
+         +-------------------+
+         |   AbstractClass   |
+         +-------------------+
+         |                   |
+         | +templateMethod() |
+         | +step1()          |
+         | +step2()          |
+         |                   |
+         +-------------------+
+                   #
+                   |
+        +----------+--------------+
+        |                         |
++-------+-----------+   +---------+---------+
+|   ConcreteClass1  |   |   ConcreteClass2  |
++-------------------+   +-------------------+
+|                   |   |                   |
+|     +step1()      |   |     +step1()      |
+|     +step2()      |   |     +step2()      |
+|                   |   |                   |
++-------------------+   +-------------------+
 
---
+```
 
 (Template Method's abstract class may also define hook methods that may be overridden by subclasses)
 
@@ -404,3 +425,29 @@ puts(html_report.generate)
 plain_text_report = Report.new("Shopping List", stuff_to_buy, PlainTextGenerator.new)
 puts(plain_text_report.generate)
 ```
+
+---
+
+```
+                               +---------------------+
++---------------------+        |      Strategy       |
+|      Context        |        +---------------------+
++---------------------+        |   +doSomething()    |
+|                     +------->|                     |
+|                     |        +---------------------+
++---------------------+                  #
+                                         |
+                               +---------+-----------+
+                               |                     |
+                 +-------------+-------+   +---------+-----------+
+                 |  ConcreteStrategyA  |   |  ConcreteStrategyB  |
+                 +---------------------+   +---------------------+
+                 |   +doSomething()    |   |   +doSomething()    |
+                 |                     |   |                     |
+                 +---------------------+   +---------------------+
+```
+
+---
+
+[Design Patterns in Ruby](http://designpatternsinruby.com/)
+
