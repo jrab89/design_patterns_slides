@@ -315,3 +315,92 @@ puts(plain_text_report.generate)
 
 ![Template Method Pattern](https://upload.wikimedia.org/wikipedia/commons/b/b5/Template_Method_design_pattern.png)
 
+--
+
+(Template Method's abstract class may also define hook methods that may be overridden by subclasses)
+
+---
+
+![Pitfall](https://upload.wikimedia.org/wikipedia/en/5/54/A2600_Pitfall.png)
+
+# Pitfalls
+
+- Inheritence increases coupling
+- At its best when the interface imposed by the template method on the subclasses is minimal
+
+---
+
+# An alternative approach?
+
+## Swap out the whole algorithm with the *Strategy Pattern*
+
+![Swap](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Set_of_security_screw_driver_bits.jpg/320px-Set_of_security_screw_driver_bits.jpg)
+
+---
+
+```ruby
+class Report
+  attr_reader :title, :items, :generator
+
+  def initialize(title, items, generator)
+    @title = title
+    @items = items
+    @generator = generator
+  end
+
+  def generate
+    generator.generate
+  end
+end
+```
+
+---
+
+```ruby
+class HTMLGenerator
+  def generate(title, items)
+    lines = []
+    lines << "<html>"
+    lines << "  <head>"
+    lines << "    <title>#{title}</title>"
+    lines << "  </head>"
+    lines << "  <body>"
+    items.each do |item|
+      lines << "    <p>#{item}</p>"
+    end
+    lines << "  </body>"
+    lines << "</html>"
+
+    lines.join("\n")
+  end
+end
+```
+
+---
+
+```ruby
+class PlainTextGenerator
+  def generate(title, items)
+    lines = []
+    lines << title
+    lines << "=" * title.length
+    items.each do |item|
+      lines << "- #{item}"
+    end
+
+    lines.join("\n")
+  end
+end
+```
+
+---
+
+```ruby
+stuff_to_buy = ["Hot Pockets", "Frozen Pizza", "Pop Tarts"]
+
+html_report = Report.new("Shopping List", stuff_to_buy, HTMLGenerator.new)
+puts(html_report.generate)
+
+plain_text_report = Report.new("Shopping List", stuff_to_buy, PlainTextGenerator.new)
+puts(plain_text_report.generate)
+```
