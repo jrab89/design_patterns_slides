@@ -29,7 +29,7 @@ class Report
 
     lines << "<html>"
     lines << "  <head>"
-    lines << "    <title>#{@title}</title>"
+    lines << "    <title>#{title}</title>"
     lines << "  </head>"
     lines << "  <body>"
     items.each do |item|
@@ -311,7 +311,7 @@ puts(plain_text_report.generate)
 
 ---
 
-# Different formats are different subclasses
+## Different formats become different subclasses, the general flow stays in the base class
 
 ![Template Method Pattern](https://upload.wikimedia.org/wikipedia/commons/b/b5/Template_Method_design_pattern.png)
 
